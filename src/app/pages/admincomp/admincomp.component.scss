@@ -1,0 +1,73 @@
+
+$font-color:#444444;
+$font-family1:"Helvetica Neue", Helvetica, Arial, sans-serif;
+$bg-color-selector:#9cd8ce;
+$font-hovercolor1:#e87c1e;
+
+.content {
+    min-height: 100%;
+  
+    /* Equal to height of footer */
+    /* But also accounting for potential margin-bottom of last child */
+  }
+
+  .push {
+    height: 12rem;
+  }
+
+  .col1{
+    margin:auto;
+}
+#row-naslov{
+    text-align: center;
+    h2{
+        font-family: $font-family1;
+        color:$font-color;
+        font-weight: bolder;
+    }
+}
+imp-col222{
+
+  #atributZaLogin{
+      font-size:16px;
+  }
+}
+.imp-row{
+  background-color:#9cd8ce;
+  border-radius:14px;
+  .imp-col{
+      margin-left:1rem;
+  }
+  select{
+      margin-top:13px;
+      width:10rem;
+  }
+  .rez-btn{
+      margin-top:13px;
+      margin-left:1rem;
+      background-color:$font-hovercolor1;
+      color:white;
+      &:hover{
+          background-color:$font-color;
+      }
+  }
+}
+
+.page-title{
+    margin-bottom:4rem;
+}
+.prikaz-row{
+    margin-bottom: 40px;
+    .lblform{
+        font-size:16px;
+        font-style:normal;
+        font-weight: bolder;
+}
+}
+//za tabelu
+tr{
+    input{
+        width:10rem;
+    }
+}
+

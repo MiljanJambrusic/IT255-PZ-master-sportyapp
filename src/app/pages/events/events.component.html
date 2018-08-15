@@ -1,0 +1,107 @@
+<div class="wrapper">
+  <div class="content">
+    <div class="col mb-4"></div>
+    <div class="container">
+      <section class="page-title text-center">
+        <h1 class=" h1txt">Događaji</h1>
+        <img src="../../../assets/slike/sportylogo.png">
+      </section>
+
+
+
+      <div class="alert alert-danger" style="display: none;">
+      </div>
+      <div class="eventpickerdiv">
+        <select [(ngModel)]="eventpicker" class="form-control slc" (focusin)="popunidropdown()" (change)="popuniOnSelect()">
+          <option selected value disabled>Izaberite događaj</option>
+          <option *ngFor="let event of dogadjajizadropdown" [ngValue]="event">
+            {{event.tim1}} protiv {{event.tim2}}
+          </option>
+        </select>
+      </div>
+      <section *ngIf="provera">
+        <div class="row rowforvision mt-3 ml-3">
+          <div class="col-md-3 col-lg-3 col-sm-4">
+            <label class="lblform">Naziv protivničkog tima:
+            </label>
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-4">
+            <form [formGroup]="searchTool">
+              <div class="form-group">
+                <input type="text" formControlName='zahtevaniTim' class="form-control pronadjiigracainput" placeholder="Pozovi drugi tim"
+                  aria-label="Pozovi igrača">
+              </div>
+            </form>
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-3">
+            <button type="submit" name="submit" class="btn btn-default btn-block btn-info pronadji-btn" (click)="pozovitimnamec()">
+              Pozovi
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div class="alert alert-danger col-md-4 col-lg-4 col-sm-4 alrt" *ngIf="alert">
+            Traženi tim ne postoji
+        </div>
+      </section>
+      <section>
+        <div class="row rowforvision mt-4 ml-3">
+          <div class="col-md-3 col-lg-3 col-sm-4">
+            <label class="lblform">Prvi tim:
+            </label>
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-4">
+            <label ([ngModel])="team1name" class="lblform">
+              {{team1name}}
+            </label>
+          </div>
+        </div>
+        <div class="row rowforvision mt-4 ml-3">
+          <div class="col-md-3 col-lg-3 col-sm-4">
+            <label class="lblform">Drugi tim:
+            </label>
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-4">
+            <label ([ngModel])="team2name" class="lblform">
+              {{team2name}}
+            </label>
+          </div>
+        </div>
+
+      </section>
+      <div class="row rowforvision mt-4 ml-3">
+          <div class="col-md-3 col-lg-3 col-sm-4">
+            <label class="lblform">Kreator:
+            </label>
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-4">
+            <label ([ngModel])="kreatormodel" class="lblform">
+              {{kreatormodel}}
+            </label>
+          </div>
+        </div>
+      <div class="row rowforvision mt-4 ml-3">
+        <div class="col-md-3 col-lg-3 col-sm-4">
+          <label class="lblform">Datum događaja:
+          </label>
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-4">
+          <label ([ngModel])="datumodigravanja" class="lblform">
+            {{datumodigravanja}}
+          </label>
+        </div>
+      </div>
+      <div class="row rowforvision mt-4 ml-3">
+        <div class="col-md-3 col-lg-3 col-sm-4">
+          <label class="lblform">Status događaja:
+          </label>
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-4">
+          <label ([ngModel])="statusodigravanja" class="lblform">
+            {{statusodigravanja}}
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="push"></div>
+  </div>

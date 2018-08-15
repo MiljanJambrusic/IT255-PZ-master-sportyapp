@@ -1,0 +1,187 @@
+<div class="content">
+  <div class="row rowcontent">
+    <div class="ml-5 col-lg-2 col-md-2 col-sm-4" id="colZaZahteve">
+      <div class="row row2">
+        <label class="lblZahtevi">
+          Zahtevi za tim
+        </label>
+      </div>
+      <div class="row row3">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Naziv tima</th>
+              <th scope="col">Prihvati</th>
+              <th scope="col">Odbij</th>
+            </tr>
+          </thead>
+          <tbody class="tb">
+            <tr class="specTr" *ngIf="!proveraZahteva">
+              <td>
+                <span class="tdtext">Nemate novih zahteva za ulaz u tim.</span>
+              </td>
+            </tr>
+            <tr *ngFor="let nepotvrdjeni of nepotvrdjenizahtevizatim ; let i =index">
+              <td>{{nepotvrdjeni.nazivtima}}</td>
+              <td>
+                <button type="submit" name="submit" class="btn btn-success" (click)="prihvatiTim(nepotvrdjeni)">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+              </td>
+              <td>
+                <button type="submit" name="submit" class="btn btn-danger" (click)="odbijTim(nepotvrdjeni)">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-1 hidden-sm-1 col-lg-1"></div>
+    <div class="col-lg-4 col-md-4 col-sm-4" id="colZaPrikazTimova">
+      <div class="row">
+        <div class="col-md-6 col-sm-8 col-lg-6 colselect">
+          <div class="form-group  ml-3 lblformname">
+            <select [(ngModel)]="selektovanavrednost" class="form-control slc" (focusin)="popunidropdown()" (change)="popuniformu();proveraAutenticnosti()">
+              <option selected value disabled>Izaberite neki tim</option>
+              <option *ngFor="let naziv of skupzadropdown">
+                {{naziv}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2 col-md-2 hidden-sm"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4 lblcol">
+          <label class="lblform lbl1">Naziv tima:
+          </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 collbl">
+          <label ([ngModel])="nazivtimazaformu" class="lblform">{{nazivtimazaformu}}
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2 col-md-2 hidden-sm "></div>
+        <div class="col-lg-4 col-md-4 col-sm-4 lblcol">
+          <label class="lblform lbl1">Kreator:
+          </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 collbl">
+          <label ([ngModel])="kreator" class="lblform">{{kreator}}
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-2 col-md-2 hidden-sm "></div>
+        <div class="col-lg-4 col-md-4 col-sm-4 lblcol">
+          <label class="lblform lbl1">Igrači:
+          </label>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 lblform1">
+          <ul class="list-inline">
+            <li *ngFor="let igr of igracizaformu; let i = index">
+              #{{i+1}} {{igr}}
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <div class="row mt-4">
+        <label class="text-center1">
+          Maksimalan broj igrača je 8
+        </label>
+      </div>
+
+      <div class="row mt-4 rowsearch" *ngIf="proveraAtenticnostiKreatora">
+        <div class="col-lg-1 col-md-1 hidden-sm"></div>
+        <form class="col-lg-5 col-md-5 col-sm-5 mt-3 ml-4 " [formGroup]="searchTool">
+          <div class="form-group">
+            <input type="text" formControlName='zahtevaniSearchName' class="form-control pronadjiigracainput" placeholder="Pronadji igrače"
+              aria-label="Pozovi igrača">
+          </div>
+        </form>
+        <div class="col-lg-4 col-md-4 col-sm-4 mt-3 ">
+          <button type="submit" name="submit" class="btn btn-default btn-block btn-info pronadji-btn" (click)="searchKorisnikeKojiNisuDeoTima()">
+            Pronađi
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row mt-3 ml-5 " *ngIf="proveraAtenticnostiKreatora">
+        <div class="col-lg-6 col-md-6 hidden-sm"></div>
+        <div class="row row3 ml-2">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Naziv igrača</th>
+                <th scope="col">Pozovi</th>
+              </tr>
+            </thead>
+            <tbody class="tb">
+              <tr *ngFor="let search of listaZaSearch">
+                <td>{{search.korisnickoime}}</td>
+                <td>
+                  <button type="submit" name="submit" class="btn btn-success" (click)="pozoviUTim(search)">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-1 hidden-sm-1 col-lg-1"></div>
+    <div class="ml-5 col-lg-2 col-md-2 col-sm-4" id="colZaZahteve">
+      <div class="row row2">
+        <label class="lblZahtevi">
+          Vaši timovi
+        </label>
+      </div>
+      <div class="row row3">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Naziv tima</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody class="tb">
+            <tr *ngFor="let timkreatora of timovikreatora">
+              <td>{{timkreatora.nazivTima}}</td>
+              <td>
+                <button type="submit" name="submit" class="btn btn-danger" (click)="obrisiTimIzListeTimova(timkreatora);obrisiTimIzListeIgraca(timkreatora)">
+                  <i class="fa fa-times" aria-hidden="true">Obriši tim</i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row mt-4" *ngIf="viseodtri">
+          <form [formGroup]="napravitim">
+            <div class="col">
+                <label class="lblZahtevi">
+                    Napravi novi tim
+                  </label>
+            </div>
+            <div class="col form-group">
+              <input type="text" formControlName='teamname' class="form-control pozoviplayerainput" placeholder="Naziv tima" aria-label="Naziv tima">
+            </div>
+          </form>
+          <div class="col">
+            <button type="submit" name="submit" class="btn btn-success" (click)="napraviTim();dodajNoviTimUListuIgraca()">
+              <i class="fa fa-check" aria-hidden="true">Napravi tim</i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="push"></div>
+</div>

@@ -1,0 +1,219 @@
+
+$font-color:#444444;
+$font-family1:"Helvetica Neue", Helvetica, Arial, sans-serif;
+$bg-color-selector:#9cd8ce;
+$font-hovercolor1:#e87c1e;
+
+.content {
+    min-height: 100%;
+  }
+.push {
+    height: 12rem;
+  }
+
+.carousel-container{
+      min-height:500px;
+      max-height:500px;
+    img{
+          max-height:500px !important;
+          min-height:500px !important;
+    }
+    .carousel-cont{
+        background-color: rgba(46, 45, 45, 0.6);
+    }
+}
+
+.col1{
+    margin:auto;
+}
+#row-naslov{
+    text-align: center;
+    h2{
+        font-family: $font-family1;
+        color:$font-color;
+        font-weight: bolder;
+    }
+}
+
+
+.imp-col222{
+
+    #atributZaLogin{
+        font-size:16px;
+    }
+}
+.imp-row{
+    background-color:#9cd8ce;
+    border-radius:14px;
+    .imp-col{
+        margin-left:2rem;
+    }
+    select{
+        margin-top:13px;
+        width:10rem;
+    }
+    .rez-btn{
+        margin-top:13px;
+        width:10rem;
+        margin-left:2rem;
+        background-color:$font-hovercolor1;
+        color:white;
+        &:hover{
+            background-color:$font-color;
+        }
+    }
+}
+
+.cont-card{
+    margin-top:5rem;
+    border-top: 1px solid gray;
+    border-bottom:1px solid gray;
+    padding-bottom:5rem;
+
+    .btn{
+        background-color:$font-hovercolor1;
+        color:white;
+        &:hover{
+            background-color:$font-color;
+        }
+    }
+    .card{
+        height:32rem;
+    }
+    
+    .row{
+        
+        margin:auto;
+        margin-left:2.5rem;
+        margin-top:5rem;
+    }
+
+    h2{
+        margin-top:4rem;
+    }
+}
+
+//Za komentare
+
+#komentari{
+
+    .btn-primary{
+        color: #fff;
+        background-color: #007b5e;
+        border-color: #007b5e;
+        &:hover{
+            background-color: #108d6f;
+            border-color: #108d6f;
+            box-shadow: none;
+            outline: none;
+        }
+        &:focus{
+            background-color: #108d6f;
+             border-color: #108d6f;
+             box-shadow: none;
+            outline: none;
+        }
+    }
+    section {
+        padding: 60px 0;
+        .section-title{
+            text-align: center;
+            color: #007b5e;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+        }
+    }
+    .card {
+        border: none;
+        background: #ffffff;
+    }
+
+    .image-flip {
+        &:hover .backside, &.hover .backside {
+          -webkit-transform: rotateY(0deg);
+          -moz-transform: rotateY(0deg);
+          -o-transform: rotateY(0deg);
+          -ms-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+          border-radius: .25rem;
+        }
+      }
+      .image-flip {
+        &:hover .frontside, &.hover .frontside {
+          -webkit-transform: rotateY(180deg);
+          -moz-transform: rotateY(180deg);
+          -o-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+        }
+      }
+      
+      .mainflip {
+        -webkit-transition: 1s;
+        -webkit-transform-style: preserve-3d;
+        -ms-transition: 1s;
+        -moz-transition: 1s;
+        transition: 1s;
+        transform-style: preserve-3d;
+        position: relative;
+      }
+      
+      .frontside {
+        position: relative;
+        z-index: 2;
+        margin-bottom: 30px;
+      }
+      
+      .backside {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: white;
+        -webkit-transform: rotateY(-180deg);
+        -moz-transform: rotateY(-180deg);
+        -o-transform: rotateY(-180deg);
+        -ms-transform: rotateY(-180deg);
+        transform: rotateY(-180deg);
+        -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+        -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+        box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+      }
+      
+      .frontside, .backside {
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transition: 1s;
+        -webkit-transform-style: preserve-3d;
+        -moz-transition: 1s;
+        -moz-transform-style: preserve-3d;
+        -o-transition: 1s;
+        -o-transform-style: preserve-3d;
+        -ms-transition: 1s;
+        -ms-transform-style: preserve-3d;
+        transition: 1s;
+        transform-style: preserve-3d;
+      }
+      
+      .frontside .card {
+        min-height: 312px;
+      }
+      
+      .backside .card {
+        min-height: 312px;
+        a {
+          font-size: 18px;
+          color: #007b5e !important;
+        }
+      }
+      
+      .frontside .card .card-title, .backside .card .card-title {
+        color: #007b5e !important;
+      }
+      
+      .frontside .card .card-body img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+      }
+}

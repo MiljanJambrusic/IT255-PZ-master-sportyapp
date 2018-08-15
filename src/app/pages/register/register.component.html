@@ -1,0 +1,51 @@
+<section class="bg">
+  <div class="col mb-4"></div>
+  <div class="container" id="bgcontainer">
+    <section class="page-title text-center">
+      <h1 class=" h1txt">Dobrodošli na stranu za registrovanje</h1>
+      <img src="../../../assets/slike/sportylogo.png">
+    </section>
+    <div class="col-sm-12 col-m-8 col-lg-8" id="registerdiv">
+
+      <form role="form" id="loginform" [formGroup]="registerForm">
+        <div class="alert alert-danger" style="display: none;">
+        </div>
+        <div class="form-group">
+          <label class="lblform" for="imeime">Ime
+          </label>
+          <input type="text" class="form-control" id="imeime" name="ime" formControlName='imeKorisnika' placeholder="Unesite vaše ime">
+        </div>
+        <div class="form-group">
+          <label class="lblform" for="prezimeprezime">Prezime</label>
+          <input type="text" class="form-control" name="prezime" id="prezimeprezime" formControlName='prezimeKorisnika' placeholder="Unesite vaše prezime">
+        </div>
+        <div class="form-group">
+          <label class="lblform" for="kime">Korisničko ime</label>
+          <input type="text" class="form-control" name="korisnickoime" id="kime" formControlName='korisnickoIme' placeholder="Unesite korisničko ime">
+        </div>
+        <div class="form-group">
+          <label class="lblform" for="pw">Lozinka</label>
+          <input type="password" class="form-control" name="pw" id="pw" formControlName='password' placeholder="Lozinka">
+        </div>
+        <div class="form-group">
+          <label class="lblform" for="emailadresa">Email adresa</label>
+          <input type="email" class="form-control" name="emailadresa" id="emailadresa" formControlName='emailAdresa' placeholder="Unesite email adresu">
+        </div>
+        <button type="submit" name="submit" class="btn btn-default btn-block reg-button" (click)="register()">Registrujte se
+          <i class="fa fa-sign-in" aria-hidden="true"></i>
+        </button>
+
+      </form>
+    </div>
+    <div class="mt-3 col-mt-12 col-md-12 col-lg-12 text-center reg-last-div">
+      <a id="atributZaLogin" href="" routerLink="../login" routerLinkActive="active"> Ukoliko posedujete nalog, ulogujte se ovde, </a>
+      <span>ili se registrujte pomoću sledećih servisa </span>
+      <button type="button" name="button" class="btn btn-default btn-google">
+        <i class="fa fa-google" aria-hidden="true"></i>
+      </button>
+      <button type="button" name="button" class="btn btn-default btn-fa">
+        <i class="fa fa-facebook" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</section>
