@@ -6,7 +6,6 @@ import { ReactiveFormsModule, FormsModule } from '../../node_modules/@angular/fo
 import { HttpModule, Http } from '../../node_modules/@angular/http';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { LocationComponent } from './pages/location/location.component';
 import { EventsComponent } from './pages/events/events.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -21,7 +20,6 @@ import { FilterdanPipe } from './pipes/filterdan.pipe';
   declarations: [
     AppComponent,
     HomeComponent,
-    LocationComponent,
     EventsComponent,
     TeamsComponent,
     LoginComponent,
