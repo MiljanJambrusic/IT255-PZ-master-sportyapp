@@ -7,9 +7,9 @@ import { Datum } from './../../models/datum.model';
 import { Authentication } from './../../services/authentication';
 import { Component, OnInit } from '@angular/core';
 
-import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
 
 
 @Component({
@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   public istina: boolean = false;
   public mogucisati: string[] = ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
   public dozvoljenitermini: string[] = this.mogucisati;
-  public ok:boolean = false;
+  public ok: boolean = false;
 
   datumi: Datum[] = [
     { mesec: "Januar", dan: 31 },
@@ -50,13 +50,13 @@ export class HomeComponent implements OnInit {
     { mesec: "Decembar", dan: 31 }
   ];
 
-  public promeniok(){
-    this.ok=false;
+  public promeniok() {
+    this.ok = false;
   }
 
 
 
-  constructor(private _http: Http, private _router: Router, private _auth: Authentication) { }
+  constructor(private api: ApiService, private _router: Router, private _auth: Authentication) { }
 
 
 
@@ -64,17 +64,16 @@ export class HomeComponent implements OnInit {
 
     this.mesecc = "";
     this.dani = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-    this._http.get('http://localhost/sportyAppPhp/getzabranjenitermini.php', { headers: headers })
-      .subscribe(data => {
-        this.zabranjenitermini = JSON.parse(data['_body']).termini;
-      }
-        , err => {
-          alert(JSON.parse(err._body).error);
-        }
-      );
+
+    // this._http.get('http://localhost/sportyAppPhp/getzabranjenitermini.php', { headers: headers })
+    //   .subscribe(data => {
+    //     this.zabranjenitermini = JSON.parse(data['_body']).termini;
+    //   }
+    //     , err => {
+    //       alert(JSON.parse(err._body).error);
+    //     }
+    //   );
     this.prikupitimove();
   }
 
@@ -83,21 +82,20 @@ export class HomeComponent implements OnInit {
 
   //prikupljanje timova
   public prikupitimove() {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.get('http://localhost/sportyAppPhp/gettimove.php', { headers: headers })
-      .subscribe(data => {
-        let skuptimova: Timovi[] = [];
-        skuptimova = JSON.parse(data['_body']).skuptimova;
-        for (let i = 0; i < skuptimova.length; i++) {
-          if (skuptimova[i].kreator == this._auth.getUsername()) {
-            this.timovikreatora.push(skuptimova[i]);
-          }
-        }
-      }, err => {
-        alert(JSON.parse(err._body).error);
-      }
-      );
+
+    // this._http.get('http://localhost/sportyAppPhp/gettimove.php', { headers: headers })
+    //   .subscribe(data => {
+    //     let skuptimova: Timovi[] = [];
+    //     skuptimova = JSON.parse(data['_body']).skuptimova;
+    //     for (let i = 0; i < skuptimova.length; i++) {
+    //       if (skuptimova[i].kreator == this._auth.getUsername()) {
+    //         this.timovikreatora.push(skuptimova[i]);
+    //       }
+    //     }
+    //   }, err => {
+    //     alert(JSON.parse(err._body).error);
+    //   }
+    //   );
 
   }
 
@@ -127,17 +125,16 @@ export class HomeComponent implements OnInit {
     } else {
       this.istina = false;
       this.ok = true;
-      this.modeldan==null;
-      this.modelsat =="";
-      this.mesecc=="";
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      this._http.post('http://localhost/sportyAppPhp/napravidogadjaj.php', data, { headers: headers }).subscribe((result) => {
-    },
-      err => {
-        console.log("greška prilikom pravljenja novog događaja");
-      }
-    );
+      this.modeldan == null;
+      this.modelsat == "";
+      this.mesecc == "";
+
+      // this._http.post('http://localhost/sportyAppPhp/napravidogadjaj.php', data, { headers: headers }).subscribe((result) => {
+      // },
+      //   err => {
+      //     console.log("greška prilikom pravljenja novog događaja");
+      //   }
+      // );
     }
 
   }

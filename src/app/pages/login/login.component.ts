@@ -2,9 +2,10 @@ import { User } from './../../models/user.model';
 import { Authentication } from './../../services/authentication';
 import { Component, OnInit } from '@angular/core';
 
-import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -19,51 +20,31 @@ export class LoginComponent implements OnInit {
   });
 
   private user: User;
-  constructor(private _http: Http, private _router: Router, private _auth: Authentication) { }
+  constructor(private api: ApiService, private _router: Router, private _auth: Authentication, private tokenStorage: TokenStorageService) { }
 
   public login() {
     this.errors = [];
-    const data = 'korisnickoime=' + this.loginForm.value.korisnickoIme + '&password=' + this.loginForm.value.lozinka;
-    this.user = new User("", "", this.loginForm.value.korisnickoIme, this.loginForm.value.lozinka, "", 0);
+
+    this.user = new User("", "", this.loginForm.value.korisnickoIme, this.loginForm.value.lozinka, "");
     this._auth.login(this.user)
       .then((user) => {
         
         this._router.navigateByUrl("home");
-        localStorage.setItem('token', user.json().token);
-        if (user.json().admin == 1) {
+        this.tokenStorage.saveToken(user.accessToken);
+        this.tokenStorage.saveUsername(user.email);
+        
+        this._auth.setAuth(true);
+
+        if (user.authorities.some(x => x.authority === 'ADMIN')) {
           this._auth.setAdmin(true);
         } else {
           this._auth.setAdmin(false);
         }
         this._auth.setAuth(true);
-        location.reload();
       })
       .catch((err) => {
-        let obj = JSON.parse(err._body);
-        let res = obj.error.split("\\r\\n");
-        res.pop();
-        res[0] = res[0].substr(1);
-        res.forEach(element => {
-          this.errors.push(element);
-        });
+        console.log("Pogresan username ili password");
       });
-
-    /*const headers = new Headers();
-
-    console.log(data);
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.post('http://localhost/sportyAppPhp/loginservice.php', data, { headers: headers }).subscribe((result) => {
-      const obj = JSON.parse(result['_body']);
-      console.log(result['_body']);
-      localStorage.setItem('token', obj.token);
-      this._router.navigateByUrl("home");
-      location.reload();
-    },
-      err => {
-        alert(JSON.parse(err._body).error);
-      }
-    );
-    */
 
   }
   ngOnInit() {

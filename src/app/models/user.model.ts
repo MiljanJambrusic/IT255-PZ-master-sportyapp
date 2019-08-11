@@ -4,7 +4,6 @@ export class User{
         public prezime: string,
         public korisnickoime: string,
         public password: string,
-        public email: string,
-        public privilegije: number
+        public email: string
     ){}
 }

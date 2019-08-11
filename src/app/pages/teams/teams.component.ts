@@ -2,10 +2,10 @@ import { Svikorisnici } from './../../models/korisnicizainvite.model';
 import { Timovi } from './../../models/timovi.model';
 import { Authentication } from './../../services/authentication';
 import { Component, OnInit } from '@angular/core';
-import { Http, Headers } from '../../../../node_modules/@angular/http';
 import { Router } from '../../../../node_modules/@angular/router';
 import { Igraci } from '../../models/igraci.model';
 import { FormGroup, FormControl } from '../../../../node_modules/@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { FormGroup, FormControl } from '../../../../node_modules/@angular/forms'
   styleUrls: ['./teams.component.scss']
 })
 export class TeamsComponent implements OnInit {
-  constructor(private _http: Http, private _router: Router, private _auth: Authentication) { }
+  constructor(private api: ApiService, private _router: Router, private _auth: Authentication) { }
 
 
   //Za potvrde
@@ -152,49 +152,46 @@ export class TeamsComponent implements OnInit {
   //Metoda koja prikuplja sve igrače koji pripadaju nekom timu
 
   public zahtevizatim() {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-    this._http.get('http://localhost/sportyAppPhp/getigrace.php', { headers: headers })
-      .subscribe(data => {
-        this.skupigraca = JSON.parse(data['_body']).skupigraca;
-        for (let i = 0; i < this.skupigraca.length; i++) {
-          if (this.skupigraca[i].igrac == this._auth.getUsername() && this.skupigraca[i].status == 0) {
-            this.nepotvrdjenizahtevizatim.push(this.skupigraca[i]);
-            this.proveraZahteva = true;
-          }
-        }
-      }, err => {
-        alert(JSON.parse(err._body).error);
-      }
-      );
+    // this._http.get('http://localhost/sportyAppPhp/getigrace.php', { headers: headers })
+    //   .subscribe(data => {
+    //     this.skupigraca = JSON.parse(data['_body']).skupigraca;
+    //     for (let i = 0; i < this.skupigraca.length; i++) {
+    //       if (this.skupigraca[i].igrac == this._auth.getUsername() && this.skupigraca[i].status == 0) {
+    //         this.nepotvrdjenizahtevizatim.push(this.skupigraca[i]);
+    //         this.proveraZahteva = true;
+    //       }
+    //     }
+    //   }, err => {
+    //     alert(JSON.parse(err._body).error);
+    //   }
+    //   );
   }
 
 
   //Metoda za prikupljanje svih timova
   public prikupitimove() {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.get('http://localhost/sportyAppPhp/gettimove.php', { headers: headers })
-      .subscribe(data => {
-        let count = 0;
-        this.skuptimova = JSON.parse(data['_body']).skuptimova;
-        for (let i = 0; i < this.skuptimova.length; i++) {
-          if (this.skuptimova[i].kreator == this._auth.getUsername()) {
-            this.timovikreatora.push(this.skuptimova[i]);
-            count++;
-          }
-        }
-        if (count < 3) {
-          this.viseodtri = true;
-        }
-        else {
-          this.viseodtri = false;
-        }
-      }, err => {
-        alert(JSON.parse(err._body).error);
-      }
-      );
+
+    // this._http.get('http://localhost/sportyAppPhp/gettimove.php', { headers: headers })
+    //   .subscribe(data => {
+    //     let count = 0;
+    //     this.skuptimova = JSON.parse(data['_body']).skuptimova;
+    //     for (let i = 0; i < this.skuptimova.length; i++) {
+    //       if (this.skuptimova[i].kreator == this._auth.getUsername()) {
+    //         this.timovikreatora.push(this.skuptimova[i]);
+    //         count++;
+    //       }
+    //     }
+    //     if (count < 3) {
+    //       this.viseodtri = true;
+    //     }
+    //     else {
+    //       this.viseodtri = false;
+    //     }
+    //   }, err => {
+    //     alert(JSON.parse(err._body).error);
+    //   }
+    //   );
 
   }
 
@@ -222,41 +219,36 @@ export class TeamsComponent implements OnInit {
     this.skupigraca.push(privremeni);
     let data = 'igrac=' + search.korisnickoime + '&status=' + 0 + '&nazivtima=' + this.nazivtimazaformu;
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.post('http://localhost/sportyAppPhp/pozoviutim.php', data, { headers: headers }).subscribe((result) => {
-    },
-      err => {
-        console.log("greska u slanju zahteva igraču za tim");
-      }
-    );
+    // this._http.post('http://localhost/sportyAppPhp/pozoviutim.php', data, { headers: headers }).subscribe((result) => {
+    // },
+    //   err => {
+    //     console.log("greska u slanju zahteva igraču za tim");
+    //   }
+    // );
   }
 
   //Pravljenje novog tima
   napraviTim() {
     let newteam: string = this.napravitim.value.teamname;
     let data = 'nazivtima=' + newteam + '&kreator=' + this._auth.getUsername();
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.post('http://localhost/sportyAppPhp/napravitim.php', data, { headers: headers }).subscribe((result) => {
-    },
-      err => {
-        console.log("greška prilikom pravljenja novog tima");
-      }
-    );
+    // this._http.post('http://localhost/sportyAppPhp/napravitim.php', data, { headers: headers }).subscribe((result) => {
+    // },
+    //   err => {
+    //     console.log("greška prilikom pravljenja novog tima");
+    //   }
+    // );
   }
 
   public dodajNoviTimUListuIgraca() {
     let newteam: string = this.napravitim.value.teamname;
     let data1 = 'igrac=' + this._auth.getUsername() + '&status=' + 1 + '&nazivtima=' + newteam;
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.post('http://localhost/sportyAppPhp/napravitimulistiigraca.php', data1, { headers: headers }).subscribe((result) => {
-    },
-      err => {
-        console.log("greška prilikom dodavanja novog tima i kreatora u listu igrača.");
-      }
-    );
+
+    // this._http.post('http://localhost/sportyAppPhp/napravitimulistiigraca.php', data1, { headers: headers }).subscribe((result) => {
+    // },
+    //   err => {
+    //     console.log("greška prilikom dodavanja novog tima i kreatora u listu igrača.");
+    //   }
+    // );
     location.reload();
   }
 
@@ -264,14 +256,13 @@ export class TeamsComponent implements OnInit {
 
   public obrisiTimIzListeTimova(tim: Timovi) {
     let data = 'nazivtima=' + tim.nazivTima;
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.post('http://localhost/sportyAppPhp/obrisitimizlistetimova.php', data, { headers: headers }).subscribe((result) => {
-    },
-      err => {
-        console.log("Greška prilikom brisanja tima iz liste timova");
-      }
-    );
+
+    // this._http.post('http://localhost/sportyAppPhp/obrisitimizlistetimova.php', data, { headers: headers }).subscribe((result) => {
+    // },
+    //   err => {
+    //     console.log("Greška prilikom brisanja tima iz liste timova");
+    //   }
+    // );
 
     for (let i = 0; i < this.skuptimova.length; i++) {
       if (this.skuptimova[i].nazivTima == tim.nazivTima) {
@@ -291,14 +282,13 @@ export class TeamsComponent implements OnInit {
 
   public obrisiTimIzListeIgraca(tim: Timovi) {
     let data1 = 'nazivtima=' + tim.nazivTima;
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.post('http://localhost/sportyAppPhp/obrisitimizlisteigraca.php', data1, { headers: headers }).subscribe((result) => {
-    },
-      err => {
-        console.log("Greška prilikom brisanja tima iz liste timova");
-      }
-    );
+
+    // this._http.post('http://localhost/sportyAppPhp/obrisitimizlisteigraca.php', data1, { headers: headers }).subscribe((result) => {
+    // },
+    //   err => {
+    //     console.log("Greška prilikom brisanja tima iz liste timova");
+    //   }
+    // );
 
     for (let i = 0; i < this.skupigraca.length; i++) {
       if (this.skupigraca[i].nazivtima == tim.nazivTima) {
@@ -322,14 +312,13 @@ export class TeamsComponent implements OnInit {
     } else {
       this.proveraZahteva = true;
     }
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.post('http://localhost/sportyAppPhp/obrisizahtevzatim.php', data, { headers: headers }).subscribe((result) => {
-    },
-      err => {
-        console.log("Greška prilikom odbijanja tima");
-      }
-    );
+
+    // this._http.post('http://localhost/sportyAppPhp/obrisizahtevzatim.php', data, { headers: headers }).subscribe((result) => {
+    // },
+    //   err => {
+    //     console.log("Greška prilikom odbijanja tima");
+    //   }
+    // );
   }
 
   //Prihvatanje tima
@@ -346,27 +335,24 @@ export class TeamsComponent implements OnInit {
       }
     }
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.post('http://localhost/sportyAppPhp/prihvatizahtevzatim.php', data, { headers: headers }).subscribe((result) => {
-    },
-      err => {
-        console.log("Greška prilikom prihvatanja tima");
-      }
-    );
+    // this._http.post('http://localhost/sportyAppPhp/prihvatizahtevzatim.php', data, { headers: headers }).subscribe((result) => {
+    // },
+    //   err => {
+    //     console.log("Greška prilikom prihvatanja tima");
+    //   }
+    // );
   }
 
   //Metoda za prikupljanje svih korisnika
   public preuzmiKorisnike() {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.get('http://localhost/sportyAppPhp/getsvekorisnike.php', { headers: headers })
-      .subscribe(data123 => {
-        this.svikorisnici = JSON.parse(data123['_body']).korisnici;
-      }
-        , err => {
-          alert(JSON.parse(err._body).error);
-        }
-      );
+
+    // this._http.get('http://localhost/sportyAppPhp/getsvekorisnike.php', { headers: headers })
+    //   .subscribe(data123 => {
+    //     this.svikorisnici = JSON.parse(data123['_body']).korisnici;
+    //   }
+    //     , err => {
+    //       alert(JSON.parse(err._body).error);
+    //     }
+    //   );
   }
 }

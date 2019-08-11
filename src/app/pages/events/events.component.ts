@@ -3,9 +3,9 @@ import { Igraci } from './../../models/igraci.model';
 import { Event } from './../../models/event.model';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '../../../../node_modules/@angular/forms';
-import { Http, Headers } from '../../../../node_modules/@angular/http';
 import { Router } from '../../../../node_modules/@angular/router';
 import { Authentication } from '../../services/authentication';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-events',
@@ -24,7 +24,7 @@ export class EventsComponent implements OnInit {
   public dogadjajizadropdown: Event[] = [];
   public skupigraca: Igraci[] = [];
 
-  public statusodigravanja:string;
+  public statusodigravanja: string;
   public datumodigravanja: string;
   public team1name: string;
   public team2name: string;
@@ -36,7 +36,7 @@ export class EventsComponent implements OnInit {
   public provera: boolean = false;
 
   public alert: boolean = false;
-  
+
 
   public eventTool = new FormGroup({
     selectModel: new FormControl()
@@ -45,7 +45,7 @@ export class EventsComponent implements OnInit {
 
 
   public imeKorisnika: string;
-  constructor(private _http: Http, private _router: Router, private _auth: Authentication) {
+  constructor(private api: ApiService, private _router: Router, private _auth: Authentication) {
   }
 
   ngOnInit() {
@@ -76,15 +76,14 @@ export class EventsComponent implements OnInit {
       this.team2name = team2ime;
       let data = "id_dog=" + this.eventpicker.id_dog + "&tim2=" + team2ime;
 
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      this._http.post('http://localhost/sportyAppPhp/updateteam2.php', data, { headers: headers }).subscribe((result) => {
-      },
-        err => {
-          console.log("Greška prilikom setovanja drugog imena za tim u eventu.");
-        }
-      );
-      this.provera=false;
+
+      // this._http.post('http://localhost/sportyAppPhp/updateteam2.php', data, { headers: headers }).subscribe((result) => {
+      // },
+      //   err => {
+      //     console.log("Greška prilikom setovanja drugog imena za tim u eventu.");
+      //   }
+      // );
+      this.provera = false;
 
     } else {
       this.alert = true;
@@ -127,53 +126,51 @@ export class EventsComponent implements OnInit {
     this.team1name = this.eventpicker.tim1;
     this.team2name = this.eventpicker.tim2;
     this.kreatormodel = this.eventpicker.kreator;
-    if(this.eventpicker.status==0){
-      
-      this.statusodigravanja="Na čekanju";
-    }else{
-      this.statusodigravanja="Odobren";
+    if (this.eventpicker.status == 0) {
+
+      this.statusodigravanja = "Na čekanju";
+    } else {
+      this.statusodigravanja = "Odobren";
     }
 
   }
 
   //Prikupljanje svih timova za search listu
   public prikupitimove() {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.get('http://localhost/sportyAppPhp/gettimove.php', { headers: headers })
-      .subscribe(data => {
-        let count = 0;
-        this.skuptimova = JSON.parse(data['_body']).skuptimova;
-      }, err => {
-        alert(JSON.parse(err._body).error);
-      }
-      );
+
+    // this._http.get('http://localhost/sportyAppPhp/gettimove.php', { headers: headers })
+    //   .subscribe(data => {
+    //     let count = 0;
+    //     this.skuptimova = JSON.parse(data['_body']).skuptimova;
+    //   }, err => {
+    //     alert(JSON.parse(err._body).error);
+    //   }
+    //   );
   }
   //Preuzimanje igrača i timova
   public preuzmiigrace() {
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-    this._http.get('http://localhost/sportyAppPhp/getigrace.php', { headers: headers })
-      .subscribe(data => {
-        this.skupigraca = JSON.parse(data['_body']).skupigraca;
+    // this._http.get('http://localhost/sportyAppPhp/getigrace.php', { headers: headers })
+    //   .subscribe(data => {
+    //     this.skupigraca = JSON.parse(data['_body']).skupigraca;
 
-      }, err => {
-        alert(JSON.parse(err._body).error);
-      }
-      );
+    //   }, err => {
+    //     alert(JSON.parse(err._body).error);
+    //   }
+    //   );
   }
 
   public preuzmiDogadjaje() {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.get('http://localhost/sportyAppPhp/getdogadjaje.php', { headers: headers })
-      .subscribe(data => {
-        this.svidogadjaji = JSON.parse(data['_body']).dogadjaji;
-      }
-        , err => {
-          alert(JSON.parse(err._body).error);
-        }
-      );
+
+    // this._http.get('http://localhost/sportyAppPhp/getdogadjaje.php', { headers: headers })
+    //   .subscribe(data => {
+    //     this.svidogadjaji = JSON.parse(data['_body']).dogadjaji;
+    //   }
+    //     , err => {
+    //       alert(JSON.parse(err._body).error);
+    //     }
+    //   );
   }
 }

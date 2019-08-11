@@ -5,11 +5,11 @@ import { Component, OnInit } from '@angular/core';
 import { Termin } from '../../models/termin.model';
 import { Datum } from '../../models/datum.model';
 import { Authentication } from './../../services/authentication';
-import { Http, Headers } from '@angular/http';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { empty } from '../../../../node_modules/rxjs';
 import { Event } from '../../models/event.model';
+import { ApiService } from 'src/app/services/api.service';
 
 
 @Component({
@@ -51,33 +51,32 @@ export class AdmincompComponent implements OnInit {
     { mesec: "Novembar", dan: 30 },
     { mesec: "Decembar", dan: 31 }
   ];
-  constructor(private _http: Http, private _router: Router, private _auth: Authentication) { }
+  constructor(private api:ApiService, private _router: Router, private _auth: Authentication) { }
 
   ngOnInit() {
     this.mesecc = "";
 
     this.dani = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    
 
-    this._http.get('http://localhost/sportyAppPhp/getzabranjeniterminifull.php', { headers: headers })
-      .subscribe(data1 => {
-        this.terminful1 = JSON.parse(data1['_body']).terminiful;
-      }
-        , err => {
-          alert(JSON.parse(err._body).error);
-        }
-      );
+    // this._http.get('http://localhost/sportyAppPhp/getzabranjeniterminifull.php', { headers: headers })
+    //   .subscribe(data1 => {
+    //     this.terminful1 = JSON.parse(data1['_body']).terminiful;
+    //   }
+    //     , err => {
+    //       alert(JSON.parse(err._body).error);
+    //     }
+    //   );
 
-    this._http.get('http://localhost/sportyAppPhp/getzabranjenitermini.php', { headers: headers })
-      .subscribe(data => {
-        this.zabranjenitermini = JSON.parse(data['_body']).termini;
-        this.zabranjenitermini = this.zabranjenitermini;
-      }
-        , err => {
-          alert(JSON.parse(err._body).error);
-        }
-      );
+    // this._http.get('http://localhost/sportyAppPhp/getzabranjenitermini.php', { headers: headers })
+    //   .subscribe(data => {
+    //     this.zabranjenitermini = JSON.parse(data['_body']).termini;
+    //     this.zabranjenitermini = this.zabranjenitermini;
+    //   }
+    //     , err => {
+    //       alert(JSON.parse(err._body).error);
+    //     }
+    //   );
 
     //pozivi
     this.preuzmiDogadjaje();
@@ -87,16 +86,14 @@ export class AdmincompComponent implements OnInit {
 
   //Za događaje
   public preuzmiDogadjaje() {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.get('http://localhost/sportyAppPhp/getdogadjaje.php', { headers: headers })
-      .subscribe(data => {
-        this.svidogadjaji = JSON.parse(data['_body']).dogadjaji;
-      }
-        , err => {
-          alert(JSON.parse(err._body).error);
-        }
-      );
+    // this._http.get('http://localhost/sportyAppPhp/getdogadjaje.php', { headers: headers })
+    //   .subscribe(data => {
+    //     this.svidogadjaji = JSON.parse(data['_body']).dogadjaji;
+    //   }
+    //     , err => {
+    //       alert(JSON.parse(err._body).error);
+    //     }
+    //   );
   }
 
   public potvrdidogadjaj(dogadjaj: Event) {
@@ -106,14 +103,12 @@ export class AdmincompComponent implements OnInit {
       }
     }
     let data = "id_dog="+dogadjaj.id_dog;
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    this._http.post('http://localhost/sportyAppPhp/updatestatusdogadjaja.php', data, { headers: headers }).subscribe((result) => {
-    },
-      err => {
-        console.log("Greška prilikom setovanja drugog imena za tim u eventu.");
-      }
-    );
+    // this._http.post('http://localhost/sportyAppPhp/updatestatusdogadjaja.php', data, { headers: headers }).subscribe((result) => {
+    // },
+    //   err => {
+    //     console.log("Greška prilikom setovanja drugog imena za tim u eventu.");
+    //   }
+    // );
   }
 
   //Dodavanje zabranjenog termina
@@ -124,14 +119,12 @@ export class AdmincompComponent implements OnInit {
     } else {
       this.data122.push(new Termin(this.modelsport, this.mesecc, this.modeldan, this.modelsat));
       let data1 = 'sport=' + this.modelsport + '&mesec=' + this.mesecc + '&dan=' + this.modeldan + '&sat=' + this.modelsat;
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      this._http.post('http://localhost/sportyAppPhp/postzabranjenitermin.php', data1, { headers: headers }).subscribe((result) => {
-      },
-        err => {
-          console.log("greska u slanju zabranjenog termina");
-        }
-      );
+      // this._http.post('http://localhost/sportyAppPhp/postzabranjenitermin.php', data1, { headers: headers }).subscribe((result) => {
+      // },
+      //   err => {
+      //     console.log("greska u slanju zabranjenog termina");
+      //   }
+      // );
       location.reload();
     }
   }
@@ -192,13 +185,13 @@ export class AdmincompComponent implements OnInit {
       let data = 'zabr_id=' + termin.zabr_id;
       const headers = new Headers();
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      this._http.post('http://localhost/sportyAppPhp/deletezabranjenitermin.php', data, { headers: headers }).subscribe((result) => {
-        console.log("Uspešno ste obrisali termin");
-      },
-        err => {
-          console.log("Greška prilikom brisanja termina");
-        }
-      );
+      // this._http.post('http://localhost/sportyAppPhp/deletezabranjenitermin.php', data, { headers: headers }).subscribe((result) => {
+      //   console.log("Uspešno ste obrisali termin");
+      // },
+      //   err => {
+      //     console.log("Greška prilikom brisanja termina");
+      //   }
+      // );
     }
   }
 }
